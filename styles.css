@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap');
+
+body{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+header{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+    border: solid 1px black;
+    width: 400px;
+    padding: 20px;
+    background-color: #F7C8E0;
+    border-radius: 15px;
+}
+
+.display {
+    border: solid 1px black;
+    background-color: white;
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    border-radius: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.display>#prevInputs{
+    height: 25%;
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 10px;
+}
+
+.display>#result{
+    height: 75%;
+    font-size: 50px;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 10px;
+}
+
+button{
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+    height: 65px;
+    border-radius: 10px;
+}
+
+.btn{
+    height: 65px;
+    background-color: #B4E4FF;
+}
+
+.calc-buttons{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button#clearBtn{
+    background-color: #fea3aa;
+}
+
+button#dlteBtn{
+    background-color: #faf884;
+}
+
+.controls {
+    grid-column: span 2;
+}
+
+#waves1 {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+#waves2 {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+}
+
+footer {
+    font-family: 'Poppins', sans-serif;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: black;
+}
