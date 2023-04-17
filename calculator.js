@@ -90,3 +90,28 @@ function handleOperatorClicked() {
 numbers.forEach(btn => btn.addEventListener('click', () => insertNums(btn.textContent)));
 operatorBtns.forEach(btn => btn.addEventListener('click', handleOperatorClicked))
 window.addEventListener('keydown', keyPressed)
+
+// function keyPressed(event) {
+//     const key = event.key;
+//     if (/[0-9]/.test(key)) {
+//         onNumberClick(key);
+//     } else if (/[\+\-\*/]/.test(key)) {
+//         const operatorButton = Array.from(operatorButtons).find(btn => btn.textContent === key);
+//         if (operatorButton) {
+//             onOperatorClick(operatorButton);
+//         }
+//     } else if (key === '.' || key === ',') {
+//         appendPoint();
+//     } else if (key === 'Backspace' || key === 'Delete') {
+//         dlte();
+//     } else if (key === 'Enter') {
+//         // if (firstOperand && operator && result.textContent !== '0') {
+//         if (firstOperand && operator) {
+//             prevInputs.textContent += result.textContent + " = ";
+//             secondOperand = Number(result.textContent);
+//             result.textContent = operate(firstOperand, secondOperand, operator);
+//         }
+//     } else if (key === 'Escape') {
+//         clear();
+//     }
+// }

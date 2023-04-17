@@ -20,7 +20,6 @@ const deleteButton = document.querySelector('#dlteBtn')
 let firstOperand;
 let secondOperand;
 let operator;
-
 let displayvalue;
 
 function operate(a,b,operator) {
@@ -33,10 +32,8 @@ function operate(a,b,operator) {
 function onNumberClick(number) {
     if (result.textContent === '0'){
         result.textContent = '';
-        result.textContent += number;
-    } else {
-        result.textContent += number;
     }
+    result.textContent += number;
 }
 
 function clear(){
@@ -53,42 +50,30 @@ function onOperatorClick(button) {
 }
 
 function appendPoint(){
-    if (result.textContent.includes('.')) return
-    result.textContent += '.'
-}
-
-function dlte() {
-    if (result.textContent.length === 1) {
-        result.textContent = '0';
-    } else {
-        result.textContent = result.textContent.slice(0, -1);
+    if (!result.textContent.includes('.')) {
+        result.textContent += '.';
     }
 }
 
+function dlte() {
+    result.textContent = result.textContent.length === 1 ? '0' : result.textContent.slice(0, -1);
+} 
+
 function keyPressed(event) {
     const key = event.key;
-    // Check if the key pressed is a number
     if (!isNaN(Number(key))) {
         onNumberClick(key);
     } else if (key === '+' || key === '-') {
-        // Check if the key pressed is an operator
         onOperatorClick({ textContent: key });
     } else if (key === '*' || key === '/') {
-        // Check if the key pressed is an operator (* or /)
         onOperatorClick({ textContent: key === '*' ? '×' : '÷' });
     } else if (key === '.' || key === ',') {
-        // Check if the key pressed is a decimal point
         appendPoint();
     } else if (key === 'Enter' || key === '=') {
-        // Check if the key pressed is the equals key
-        // You can use either 'Enter' or '=' key
-        // Call the equals function
         equalsButton.click();
     } else if (key === 'Backspace') {
-        // Check if the key pressed is the backspace key
         dlte();
     } else if (key === 'Escape') {
-        // Check if the key pressed is the escape key
         clear();
     }
 }
@@ -99,7 +84,6 @@ decimal.addEventListener('click', appendPoint)
 clearButton.addEventListener('click', clear)
 deleteButton.addEventListener('click', dlte)
 equalsButton.addEventListener('click', () => {
-    // if (firstOperand && operator && result.textContent !== '0'){
     if (firstOperand && operator){
         prevInputs.textContent += result.textContent  + " = ";
         secondOperand = Number(result.textContent);
