@@ -1,19 +1,3 @@
-const result = document.querySelector("#result");
-const prevInputs = document.querySelector("#prevInputs");
-const operators = document.querySelector(".operator");
-const numbers = document.querySelectorAll('[data-number]');
-const equals = document.getElementById('equals')
-const clearBtn = document.querySelector('#clearBtn')
-
-let firstOperand;
-let secondOperand;
-let operator;
-
-function clear(){
-    prevInputs.textContent = '0';
-    result.textContent = '0';
-}
-
 function add(a,b) {return a + b};
 function subtract(a,b) {return a - b};
 function multiply(a,b) {return a * b};
@@ -22,47 +6,105 @@ function divide(a,b) {
         return "Math Error";
     }
     return Math.round(a / b * 100000) / 100000;
-}
+};
+
+const numberButtons = document.querySelectorAll('[data-number]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const prevInputs = document.querySelector("#prevInputs");
+const result = document.querySelector('#result');
+const equalsButton = document.querySelector("#equals");
+const decimal = document.querySelector("#decimal");
+const clearButton = document.querySelector("#clearBtn")
+const deleteButton = document.querySelector('#dlteBtn')
+
+let firstOperand;
+let secondOperand;
+let operator;
+
+let displayvalue;
 
 function operate(a,b,operator) {
-    if (operator === '+') return add(a,b)
-    if (operator === '-') return subtract(a,b)
-    if (operator === '×') return multiply(a,b)
-    if (operator === '÷') return divide(a,b)
+    if (operator === '+') return add(a,b);
+    if (operator === '-') return subtract(a,b);
+    if (operator === '×') return multiply(a,b);
+    if (operator === '÷') return divide(a,b);
 }
 
-function insertNums(input){
-    if (prevInputs.textContent === '0'){
-        prevInputs.textContent = '';
-    }
-    prevInputs.textContent += input;
-}
-
-function setOperands(text){
-    if (result.textContent === '0' && prevInputs.textContent === '0'){
-        operation = text.split(' ');
-        firstOperand = Number(operation[0]);
-        secondOperand = Number(operation.slice(-1));
+function onNumberClick(number) {
+    if (result.textContent === '0'){
+        result.textContent = '';
+        result.textContent += number;
     } else {
-        firstOperand = Number(result.textContent)
-        operation = prevInputs.textContent.split(' ');
-        secondOperand = Number(operation.slice(-1));
+        result.textContent += number;
     }
-    
 }
 
-function keyPressed(e){
-    if (e.key >= 0 && e.key <= 9) insertNums(e.key);
-    if (e.key === '*') {insertNums(' × '); operator = '×'}
-    if (e.key === '/') {insertNums(' ÷ '); operator = '÷'}
-    if (e.key === '+') {insertNums(' + '); operator = '+'}
-    if (e.key === '-') {insertNums(' - '); operator = '-'}
-    if (e.key === 'Escape') clear();
-    if (e.key === '=' || e.key === 'Enter') {
-        setOperands(prevInputs.textContent);
+function clear(){
+    prevInputs.textContent = '';
+    result.textContent = '0';
+}
+
+function onOperatorClick(button) {
+    operator = button.textContent;
+    displayvalue = result.textContent;
+    firstOperand = Number(displayvalue);
+    prevInputs.textContent = displayvalue + ` ${operator} `;
+    result.textContent = '0';
+}
+
+function appendPoint(){
+    if (result.textContent.includes('.')) return
+    result.textContent += '.'
+}
+
+function dlte() {
+    if (result.textContent.length === 1) {
+        result.textContent = '0';
+    } else {
+        result.textContent = result.textContent.slice(0, -1);
+    }
+}
+
+function keyPressed(event) {
+    const key = event.key;
+    // Check if the key pressed is a number
+    if (!isNaN(Number(key))) {
+        onNumberClick(key);
+    } else if (key === '+' || key === '-') {
+        // Check if the key pressed is an operator
+        onOperatorClick({ textContent: key });
+    } else if (key === '*' || key === '/') {
+        // Check if the key pressed is an operator (* or /)
+        onOperatorClick({ textContent: key === '*' ? '×' : '÷' });
+    } else if (key === '.' || key === ',') {
+        // Check if the key pressed is a decimal point
+        appendPoint();
+    } else if (key === 'Enter' || key === '=') {
+        // Check if the key pressed is the equals key
+        // You can use either 'Enter' or '=' key
+        // Call the equals function
+        equalsButton.click();
+    } else if (key === 'Backspace') {
+        // Check if the key pressed is the backspace key
+        dlte();
+    } else if (key === 'Escape') {
+        // Check if the key pressed is the escape key
+        clear();
+    }
+}
+
+numberButtons.forEach(btn => btn.addEventListener('click', () => onNumberClick(btn.textContent)));
+operatorButtons.forEach(btn => btn.addEventListener('click', () => onOperatorClick(btn)));
+decimal.addEventListener('click', appendPoint)
+clearButton.addEventListener('click', clear)
+deleteButton.addEventListener('click', dlte)
+equalsButton.addEventListener('click', () => {
+    // if (firstOperand && operator && result.textContent !== '0'){
+    if (firstOperand && operator){
+        prevInputs.textContent += result.textContent  + " = ";
+        secondOperand = Number(result.textContent);
         result.textContent = operate(firstOperand,secondOperand,operator);
     }
-}
+})
 
-numbers.forEach(btn => btn.addEventListener('click', () => insertNums(btn.textContent)));
 window.addEventListener('keydown', keyPressed)

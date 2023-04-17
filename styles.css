@@ -43,7 +43,7 @@ header{
 }
 
 .display>#prevInputs{
-    height: 25%;
+    min-height: 40px;
     font-size: 25px;
     font-family: 'Poppins', sans-serif;
     margin-right: 10px;
